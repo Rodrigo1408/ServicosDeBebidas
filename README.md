@@ -8,8 +8,3 @@ JSF
 PrimeFaces
 Banco de dados PostGreSQL
 JUnit
-Sites importantes
-https://javaserverfaces.java.net/
-http://primefaces.org/
-http://www.mysql.com/
-http://junit.org/
