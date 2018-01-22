@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/modeloSistema.xhtml">
+    
+    <ui:define name="menu">
+        <ui:include src="/includes/menuPrincipal.xhtml" />
+    </ui:define>	
+    
+    <ui:define name="conteudo">
+       <h:form id="frmFabListagem">
+         <p:dataTable id="tblFornecedores" widgetVar="tabelaFornecedores"
+         emptyMessage="Nenhum registro encontrado."
+         value="#{MBFornecedor.itens}" var="item"
+         filteredValue="#{MBFornecedor.itensFiltrados}" rows="8"
+         paginator="true">
+         
+         <f:facet name="header">
+					<h:outputText value="Fornecedor - Listagem" />
+		 </f:facet>
+         
+         <p:column headerText="Código" sortBy="#{item.codigo}"
+             filterBy="#{item.codigo}">
+             <h:outputText value="#{item.codigo}" />
+         </p:column>
+            
+         <p:column headerText="Fornecedor" sortBy="#{item.fornecedor}"
+             filterBy="#{item.fornecedor}">
+             <h:outputText value="#{item.fornecedor}" />
+         </p:column>
+         
+         <p:column headerText="Descrição do Produto" sortBy="#{item.descricao}"
+             filterBy="#{item.descricao}">
+             <h:outputText value="#{item.descricao}" />
+         </p:column>    
+         
+         <p:column headerText="Opções">
+            <p:commandButton icon="ui-icon-trash"
+            oncomplete="PF('digFabExcluir').show();"
+            update=":frmFabExcluir:pnlFabExcluir">
+            <f:setPropertyActionListener target="#{MBFornecedor.fornecedor}"
+                  value="#{item}" />
+            </p:commandButton>
+            <p:commandButton icon="ui-icon-pencil"
+            oncomplete="PF('digFabEditar').show();"
+            update=":frmFabEditar:pnlFabEditar">
+            <f:setPropertyActionListener target="#{MBFornecedor.fornecedor}"
+                  value="#{item}" />
+            </p:commandButton>    
+         </p:column>
+         
+         <f:facet name="footer">
+					<p:commandButton value="Novo"
+						actionListener="#{MBFornecedor.prepararNovo}"
+						oncomplete="PF('digFabNovo').show();"
+						update=":frmFabNovo:pnlFabNovo" />
+				</f:facet>
+			</p:dataTable>       
+       </h:form>
+       
+       <p:dialog widgetVar="digFabNovo" closable="false" draggable="false"
+			resizable="false" modal="true" appendTo="@(body)"
+			header="Fornecedor - Novo">
+			<h:form id="frmFabNovo">
+				<h:panelGrid id="pnlFabNovo" columns="2">
+					<p:outputLabel for="txtDescFabNovo" value="Fornecedor:" />
+					<p:inputText id="txtDescFabNovo" size="30" maxlength="50"
+						value="#{MBFornecedor.fornecedor.fornecedor}" required="true"
+						requiredMessage="O campo fornecedor é obrigatório." />
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Gravar"
+						actionListener="#{MBFornecedor.novo}"
+						oncomplete="verificar(xhr, status, args, 'digFabNovo', 'tabelaFornecedores');"
+						update=":frmFabListagem:tblFornecedores :msgGlobal" />
+					<p:commandButton value="Cancelar"
+						onclick="PF('digFabNovo').hide();" process="@this">
+						<p:resetInput target="pnlFabNovo" />
+					</p:commandButton>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+       
+       <p:dialog widgetVar="digFabExcluir" closable="false" draggable="false"
+			resizable="false" modal="true" appendTo="@(body)"
+			header="Fornecedor - Excluir">
+			<h:form id="frmFabExcluir">
+				<h:panelGrid id="pnlFabExcluir" columns="2">
+					<h:outputText value="Código:" />
+					<h:outputText value="#{MBFornecedor.fornecedor.codigo}" />
+					
+					<h:outputText value="Fornecedor: " />
+					<h:outputText value="#{MBFornecedor.fornecedor.fornecedor}" />
+
+					<h:outputText value="Descrição:" />
+					<h:outputText value="#{MBFornecedor.fornecedor.descricao}" />
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Excluir"
+						actionListener="#{MBFarnecedor.excluir}"
+						oncomplete="PF('digFabExcluir').hide(); PF('tabelaFornecedores').clearFilters();"
+						update=":frmFabListagem:tblFornecedores :msgGlobal" />
+					<p:commandButton value="Cancelar"
+						onclick="PF('digFabExcluir').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+       
+       <p:dialog widgetVar="digFabEditar" closable="false" draggable="false"
+			resizable="false" modal="true" appendTo="@(body)"
+			header="Fornecedor - Editar">
+			<h:form id="frmFabEditar">
+				<h:panelGrid id="pnlFabEditar" columns="2">
+					<h:outputLabel value="Código:" />
+					<h:outputText value="#{MBFornecedor.fornecedor.codigo}" />
+
+					<h:outputLabel for="txtDescFabEditar" value="Fornecedor:" />
+					<p:inputText id="txtDescFabEditar"
+						value="#{MBFornecedor.fornecedor.fornecedor}" size="30"
+						maxlength="50" required="true"
+						requiredMessage="O campo fornecedor é obrigatório." />
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Editar"
+						actionListener="#{MBFornecedor.editar}"
+						oncomplete="verificar(xhr, status, args, 'digFabEditar', 'tabelaFornecedores');"
+						update="frmFabListagem:tblFornecedores :msgGlobal" />
+					<p:commandButton value="Cancelar"
+						onclick="PF('digFabEditar').hide();" process="@this">
+						<p:resetInput target="pnlFabEditar" />
+					</p:commandButton>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+		
+    </ui:define>
+</ui:composition>

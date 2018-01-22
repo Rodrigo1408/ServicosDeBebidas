@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+      
+      <h:head>
+           <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+           <title>Login</title>
+           <!-- Compiled and minified CSS -->
+           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" />
+           <!--Import jQuery before materialize.js-->
+           <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+           <!-- Compiled and minified JavaScript -->
+           <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+           <h:outputStylesheet library="css" name=" " />
+           <h:outputScript library="js" name=" " />
+      </h:head>
+      <h:body styleClass="dark-hive">
+            <div class="valign-wrapper" id="login-page">
+                <div class="container">
+                    <div class="center-align">
+                       <div class="row"> 
+                           <div class="col s6 offset-s3">
+                              <div class="car-content">
+                                 <img class="responsive-img" style="max-width: 64px:" src="http://carnauniversitario.appspot.com/img/beer-icon.png"/>
+                                 <div class="center-align">
+                                     <h:form id="login-form">
+                                     <p:growl autoUpdate="true" />
+                                     <div class="row">
+                                        <div class="col s12 input-field">
+                                          <h:inputText id="username" value="#{login.username}" required="true" requiredMessage="Username in required!" />
+                                          <h:outputLabel for="username" value="Username" />
+                                        </div>
+                                        <div class="col s12 input-field">
+                                          <h:inputText id="password" value="#{login.password}" required="true" requiredMessage="Password in required!" />
+                                          <h:outputLabel for="password" value="Password" />
+                                        </div>
+                                        <div class="col s12 input-field">
+                                           <h:commandLink value="Login" styleClass="btn btn-large" actionListener="#{login.login()}" />
+                                        </div>
+                                      </div>
+                                    </h:form>
+                                 </div>
+                              </div>
+                           </div>
+                       </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                $(document).on("ready", function(){
+                	$('#login-page').css({'height': window.innerHeight + 'px'});
+                });
+            </script>
+      </h:body>
+</html>
