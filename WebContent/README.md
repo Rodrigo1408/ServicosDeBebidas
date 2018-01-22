@@ -1,7 +1,7 @@
 # Projeto Servicos e Entrega de bebidas
-Esse projeto trata-se de um sistema de gerenciamento de serviços e cadastros de fabricantes e produtos, formado por meio de tabelas e janelas que permitem a visualisação e a edição das informações.
+Esse projeto trata-se de um sistema de gerenciamento de serviÃ§os e cadastros de fornecedores e produtos, formado por meio de tabelas e janelas que permitem a visualisaÃ§Ã£o e a ediÃ§Ã£o das informaÃ§Ãµes.
 
-## Integrações utilizadas
+## IntegraÃ§Ãµes utilizadas
 * JSF
 * PrimeFaces
 * Banco de dados PostGreSQL
