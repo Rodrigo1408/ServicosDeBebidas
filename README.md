@@ -7,4 +7,4 @@ Integrações utilizadas
 JSF
 PrimeFaces
 Banco de dados PostGreSQL
-JUnit
+
